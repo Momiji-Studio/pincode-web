@@ -1,18 +1,36 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>パスコード確認</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>スタジオ解錠</title>
+  <style>
+    /* 画面の余白を消して、アプリを全画面表示にする設定 */
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+    iframe { border: none; width: 100%; height: 100%; display: block; }
+  </style>
 </head>
 <body>
-<div id="app">
-  <h1>パスコードを入力してください</h1>
-  <input id="codeInput" placeholder="パスコードを入力">
-  <button id="confirmBtn">Go</button>
-  <div id="result"></div>
-</div>
-<script src="script.js"></script>
+  <iframe id="gasApp" src=""></iframe>
+
+  <script>
+    // ■■■ 設定エリア ■■■
+    // さっきコピーした「GASのウェブアプリURL」をここに貼り付けてください
+    // 末尾が /exec で終わるURLです
+    const GAS_URL = "https://script.google.com/macros/s/xxxxxxxxxxxxxxxxx/exec";
+    // ■■■■■■■■■■■■■■
+
+    // ページが開かれたときに自動実行される処理
+    window.onload = function() {
+      // 1. 今のURLについている「?id=...」などの情報を全部取得する
+      const params = window.location.search;
+      
+      // 2. GASのURLのお尻にそれをくっつける
+      const targetUrl = GAS_URL + params;
+      
+      // 3. iframe（窓）の中にそのURLを表示する
+      document.getElementById("gasApp").src = targetUrl;
+    };
+  </script>
 </body>
 </html>
